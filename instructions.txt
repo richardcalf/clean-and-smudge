@@ -1,0 +1,28 @@
+Step by step instruction on  how to clean and smudge.
+
+1. Create file index.js (this file represents a code file that contains a secret, a secret which must only ever exist on your local repo, nowhere else)
+----------------code in file-------------------------
+const API_KEY = "df6dyh38ijfu93ikdj09";
+const makeAPICall = function(key) {
+        console.log("Making API Call....");
+        console.log("code change in origin master");
+}
+makeAPICall(API_KEY);
+-----------------------------------------------------
+
+2. Implement clean and smudge filters on the local level of gitconfig
+$ git config --local filter.replaceAPIKey.smudge 'sed "s/{SECURE_API_KEY}/df6dyh38ijfu93ikdj09/"'
+$ git config --local filter.replaceAPIKey.clean 'sed "s/df6dyh38ijfu93ikdj09/{SECURE_API_KEY}/"'
+(to take a peek at what you've done) $ git config  --local -e
+
+3. In the root of your repository directory, create a .gitattributes file, and add the following line.
+*.js      filter=replaceAPIKey
+
+4. Now commit your .gitattributes file
+
+5. add and commit your other files, js and so on
+
+6. push to master
+
+now when we run the stage process it will run the clean filter.
+and when we run the checkout process it will run the smudge filter.
